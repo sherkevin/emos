@@ -1,0 +1,28 @@
+2026-01-12 15:17:29 - probabilistic_gbert - INFO - Logger initialized. Log file: logs/train_20260112_151729.log
+2026-01-12 15:17:29 - probabilistic_gbert - INFO - ============================================================
+2026-01-12 15:17:29 - probabilistic_gbert - INFO - Probabilistic G-BERT V4 - Training
+2026-01-12 15:17:29 - probabilistic_gbert - INFO - ============================================================
+2026-01-12 15:17:29 - probabilistic_gbert - INFO - Device: cpu
+2026-01-12 15:17:29 - probabilistic_gbert - INFO - Model: roberta-base
+2026-01-12 15:17:29 - probabilistic_gbert - INFO - Effective batch size: 256
+2026-01-12 15:17:29 - probabilistic_gbert - INFO - Gradient accumulation steps: 4
+2026-01-12 15:17:29 - probabilistic_gbert - INFO - Configuration:
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   model_name: roberta-base
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   embedding_dim: 64
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   num_emotions: 28
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   alpha_scale: 50.0
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   max_length: 128
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   physical_batch_size: 64
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   effective_batch_size: 256
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   grad_accum_steps: 4
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   lr_backbone: 2e-05
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   lr_heads: 0.0001
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   weight_decay: 0.01
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   epochs: 1
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   warmup_ratio: 0.1
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   patience: 3
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   lambda_cal: 0.1
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   lambda_aux: 0.05
+2026-01-12 15:17:29 - probabilistic_gbert - INFO -   device: cuda
+2026-01-12 15:17:29 - probabilistic_gbert - INFO - Generating dummy training data...
+2026-01-12 15:17:29 - probabilistic_gbert - INFO - Loading tokenizer...
