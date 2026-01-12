@@ -175,35 +175,49 @@ class FineGrainedEmotionDataset(Dataset):
 
         print(f"Loaded {len(self.samples)} samples from {data_path}")
 
-    def _soft_label_to_vector(self, label_dict: Dict[str, float]) -> torch.Tensor:
+    def _soft_label_to_vector(self, label_input) -> torch.Tensor:
         """
-        Convert soft label dictionary to 28-dim vector.
+        Convert soft label to 28-dim tensor.
 
         Args:
-            label_dict: Dictionary mapping emotion names to probabilities
+            label_input: Can be:
+                - list/tuple of 28 floats (array format)
+                - dict mapping emotion names to probabilities (dict format, for compatibility)
 
         Returns:
             28-dim torch tensor
         """
-        label_vector = torch.zeros(28)
+        # Array format (preferred)
+        if isinstance(label_input, (list, tuple)):
+            label_vector = torch.tensor(label_input, dtype=torch.float32)
+            # Ensure it's 28-dimensional
+            if label_vector.shape[0] != 28:
+                raise ValueError(f"Soft label must have 28 elements, got {label_vector.shape[0]}")
+            # Normalize to ensure sum = 1
+            total = label_vector.sum()
+            if total > 0:
+                label_vector = label_vector / total
+            return label_vector
 
-        for emotion, value in label_dict.items():
-            if emotion in EMOTION_INDEX:
-                label_vector[EMOTION_INDEX[emotion]] = value
-            else:
-                # Unknown emotion - try case-insensitive match
-                emotion_lower = emotion.lower()
-                if emotion_lower in EMOTION_INDEX:
-                    label_vector[EMOTION_INDEX[emotion_lower]] = value
+        # Dict format (for backward compatibility)
+        elif isinstance(label_input, dict):
+            label_vector = torch.zeros(28)
+            for emotion, value in label_input.items():
+                if emotion in EMOTION_INDEX:
+                    label_vector[EMOTION_INDEX[emotion]] = value
                 else:
-                    print(f"Warning: Unknown emotion '{emotion}' in label")
+                    # Unknown emotion - try case-insensitive match
+                    emotion_lower = emotion.lower()
+                    if emotion_lower in EMOTION_INDEX:
+                        label_vector[EMOTION_INDEX[emotion_lower]] = value
+            # Normalize to ensure sum = 1
+            total = label_vector.sum()
+            if total > 0:
+                label_vector = label_vector / total
+            return label_vector
 
-        # Normalize to ensure sum = 1
-        total = label_vector.sum()
-        if total > 0:
-            label_vector = label_vector / total
-
-        return label_vector
+        else:
+            raise TypeError(f"Soft label must be list or dict, got {type(label_input)}")
 
     def __len__(self) -> int:
         return len(self.samples)

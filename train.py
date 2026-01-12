@@ -254,8 +254,8 @@ def validate_model(model, dataloader, criterion, device, config):
             metrics.update("cal", loss_dict["cal"], batch_size)
             metrics.update("aux", loss_dict["aux"], batch_size)
 
-            # Track kappa values
-            all_kappas.extend(outputs["kappa"].cpu().tolist())
+            # Track kappa values (flatten (B, 1) to list)
+            all_kappas.extend(outputs["kappa"].squeeze(-1).cpu().tolist())
 
     # Compute average kappa
     avg_kappa = sum(all_kappas) / len(all_kappas)
